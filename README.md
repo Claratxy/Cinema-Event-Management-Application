@@ -1,5 +1,27 @@
-##  Coursework Template ##
-### CM2040 Database Networks and the Web ###
+### Cinema Event Management Application ###
+
+This project is a web application for managing a cinema screening platform. It supports two
+main users: organisers and attendees. Organisers can log in, create or edit movie screenings,
+set ticket types, and manage screening times. Attendees can view available screenings, book
+tickets, and leave reviews after attending.
+
+The app uses Node.js, Express, EJS templates, and SQLite as the database. The data is stored
+in tables like screenings, organisers, screening_times, bookings, and comments.
+
+Routes are split between organiser and attendee:
+-    Organisers have routes for login, register, creating/editing screenings, settings, and
+logout.
+-    Attendees can view all screenings, see screening details, book tickets, and submit
+comments.
+
+The pages are styled using CSS files in /public/css, and templates are written in EJS. Each
+screening can have multiple dates and times, which are stored in a separate table
+(screening_times) linked by foreign key.
+
+This app includes full CRUD features for screenings and secure user session handling
+for organisers. The project also includes form validation and feedback for user actions. The
+main extension is password-based access control for organisers using secure sessions.
+
 
 #### Installation requirements ####
 
@@ -12,7 +34,7 @@
 
 #### Using this template ####
 
-This template sets you off in the right direction for your coursework. To get started:
+This template sets you off in the right direction. To get started:
 
 * Run ```npm install``` from the project directory to install all the node packages.
 
@@ -39,24 +61,4 @@ Please also read the document ```Working with this Template.pdf``` for further g
 * This allows us to review and recreate your database simply by running ```npm run build-db```
 * Do NOT create or alter database tables through other means
 
-
-#### Preparing for submission ####
-
-Make a copy of your project folder.
-In your copy, delete the following files and folders:
-* node_modules
-* .git (the hidden folder with your git repository)
-* database.db (your database)
-
-Make sure that your ``package.json`` file includes all of the dependencies for your project. NB. you need to use the ```--save``` tag each time you use npm to install a dependency
-
-Edit this README.md to explain any specific instructions for setting up or using your application that you want to bring to our attention:
-
-* remove the existing contents that we have provided
-* include any settings that should be adjusted in configuration files
-* include a list of the additional libraries you are using
-* anything else we need to know in order to successfully run your app
-
-
-NB. we will ONLY run ```npm install```, ```npm run build-db```, and ```npm run start``` . We will NOT install additional packages to run your code and will NOT run additional build scripts. Be careful with any additional node dependencies that you use.
 
