@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Responsive design on mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organiser Login - Cinema Manager</title>
+
+    <!-- Base styles and organiser-specific styling -->
+    <link rel="stylesheet" href="/css/mainStyle.css">
+    <link rel="stylesheet" href="/css/organiserStyle1.css">
+</head>
+<body>
+    <!-- Login page container -->
+    <div class="container auth-page">
+        <h1>Organiser Login</h1>
+        
+        <!-- Login form posts to /organiser/login -->
+        <form class="auth-form" action="/organiser/login" method="POST">
+            <!-- Username input -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            
+            <!-- Password input -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            
+            <!-- Login button + Return to home button -->
+            <div class="form-actions">
+                <button type="submit">Login</button>
+                <button type="button" onclick="window.location.href='/'" class="secondary-button">Return</button>
+            </div>
+        </form>
+
+        <!-- Link to register page -->
+        <div class="auth-links">
+            <p>Don't have an account? <a href="/organiser/register">Register here</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,745 @@
+/* ================================
+   Attendee-Specific Enhancements
+================================== */
+
+/* ================================
+   Attendee Home Page
+================================== */
+/* Grid layout for all screening cards, auto-fitting columns with a minimum width */
+.screenings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+/* Individual screening card style */
+.screening-card {
+    background: rgba(255, 255, 255, 0.05); /* subtle transparent white */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* light border */
+    border-radius: 20px;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    border-left: 4px solid transparent; /* highlight on hover */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Thin highlight line near top of card */
+.screening-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 217, 61, 0.4), transparent);
+}
+
+/* Hover effect for card: brighten bg, lift, shadow, and accent left border */
+.screening-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    border-left-color: #ffd93d;
+}
+
+/* Hover effect for top line gradient intensifies */
+.screening-card:hover::before {
+    background: linear-gradient(90deg, transparent, rgba(255, 217, 61, 0.8), transparent);
+}
+
+/* Header container with title and cinema info spaced apart */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    gap: 15px;
+}
+
+/* Title section takes remaining space */
+.title-section {
+    flex: 1;
+}
+
+/* Movie title styling */
+.movie-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    line-height: 1.2;
+}
+
+/* Movie title hover: gold color and slight scale up */
+.movie-title:hover {
+    color: #ffd93d;
+    transform: scale(1.02);
+}
+
+/* Cinema info text with icon and muted color */
+.cinema-info {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+/* Location pin emoji before cinema info */
+.cinema-info::before {
+    content: "📍";
+    margin-right: 6px;
+}
+
+/* Genre badge with bright gradient and uppercase */
+.genre-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+    color: #1a1a1a;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    align-self: flex-start;
+}
+
+/* Main card content area: vertical stack with spacing */
+.card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Cinema description with italic style and left border accent */
+.cinema-description {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    font-style: italic;
+    border-left: 2px solid rgba(255, 217, 61, 0.3);
+    padding-left: 12px;
+}
+
+/* Movie description truncated with multi-line ellipsis */
+.movie-description {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    font-size: 0.95rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Screening times container with subtle background and border */
+.event-date {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: auto; /* push times section to bottom */
+}
+
+/* Title inside screening times */
+.event-date p {
+    color: #ffd93d;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+/* List of time slots styled in grid */
+.event-date ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 6px;
+}
+
+/* Individual time slot style */
+.event-date li {
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+}
+
+/* Time slot hover effect highlights background and text */
+.event-date li:hover {
+    background: rgba(255, 217, 61, 0.1);
+    border-color: rgba(255, 217, 61, 0.3);
+    color: #ffd93d;
+}
+
+/* Container for card action buttons, centered */
+.card-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* View details button with teal-green gradient */
+.view-details-btn {
+    background: linear-gradient(135deg, #6bcf7f, #4ecdc4);
+    color: #1a1a1a;
+    padding: 12px 24px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    min-width: 160px;
+}
+
+/* Shiny highlight effect sliding over button */
+.view-details-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+/* Hover: reverse gradient, lift, shadow, and highlight slide */
+.view-details-btn:hover {
+    background: linear-gradient(135deg, #4ecdc4, #6bcf7f);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(108, 207, 127, 0.3);
+}
+
+.view-details-btn:hover::before {
+    left: 100%;
+}
+
+/* Message shown when no screenings are available */
+.no-screenings {
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    margin-top: 40px;
+}
+
+/* Large faint movie camera emoji above no screenings text */
+.no-screenings::before {
+    content: "🎬";
+    display: block;
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.3;
+}
+
+/* Container for return/back button centered below */
+.return-button {
+    margin-top: 40px;
+    text-align: center;
+}
+
+/* Return button style */
+.return-button button {
+    background: linear-gradient(135deg, #6c757d, #495057);
+    padding: 12px 30px;
+    font-size: 1rem;
+}
+
+/* Return button hover effect: invert gradient & shadow */
+.return-button button:hover {
+    background: linear-gradient(135deg, #495057, #6c757d);
+    box-shadow: 0 8px 20px rgba(108, 117, 125, 0.4);
+}
+
+/* ================================
+   Screening Detail Page
+================================== */
+/* Header section for screening detail with background and border */
+.screening-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Thin top highlight line on screening header */
+.screening-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 217, 61, 0.6), transparent);
+}
+
+/* Movie metadata container flex, centered and wrapped */
+.movie-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+/* Individual metadata items aligned center with icon */
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+}
+
+/* Icon before metadata text, uses attribute content */
+.meta-item::before {
+    content: attr(data-icon);
+    font-size: 1.2rem;
+}
+
+/* Screening times container with margin */
+.screening-times-section {
+    margin-bottom: 40px;
+}
+
+/* Grid layout for multiple date groups */
+.screening-times-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Individual date group container with bg and border */
+.date-group {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect lifts date group and brightens */
+.date-group:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+/* Date header styling with gold color */
+.date-header {
+    font-weight: 700;
+    color: #ffd93d;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+/* Container for time slots in a flex wrap */
+.time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Individual time slot styling */
+.time-slot {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Tickets summary box with light gold/red gradient */
+.tickets-summary {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 107, 107, 0.1));
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* Tickets summary title */
+.tickets-summary h4 {
+    color: #ffd93d;
+    margin-bottom: 15px;
+}
+
+/* Container for ticket stats with gap and wrapping */
+.ticket-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+/* Individual ticket stat box text alignment */
+.ticket-stat {
+    text-align: center;
+}
+
+/* Large ticket stat number */
+.ticket-stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Ticket stat label */
+.ticket-stat-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Ticket pricing container with bg and border */
+.ticket-pricing {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    text-align: left;
+}
+
+/* Ticket pricing section header */
+.ticket-pricing h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #ffd93d;
+}
+
+/* Row container for price label/value pairs */
+.pricing-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Column container inside pricing rows */
+.pricing-column {
+    flex: 1;
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+/* Price label style */
+.price-label {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Price value style */
+.price-value {
+    font-size: 1.1rem;
+}
+
+/* ================================
+   Booking Form Styles
+================================== */
+/* Booking form container with bg, border, and padding */
+.booking-form {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Thin highlight line at top of booking form */
+.booking-form::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(107, 207, 127, 0.5), transparent);
+}
+
+/* Grid layout for rows inside booking form */
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* Quantity inputs laid out side by side */
+.quantity-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* ================================
+   Reviews Section
+================================== */
+/* Reviews container with subtle bg and border */
+.reviews-section {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+/* List container for comments */
+.comment-list {
+    margin-top: 30px;
+}
+
+/* Individual comment box styling */
+.comment-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-left: 4px solid #6bcf7f;
+    transition: all 0.3s ease;
+}
+
+/* Comment box hover effect: lighten bg and slight shift */
+.comment-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(5px);
+}
+
+/* Header row for comment with author and date */
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Author name style */
+.comment-author {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Date style */
+.comment-date {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+}
+
+/* Comment text styling with left border accent */
+.comment-text {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    font-style: italic;
+    padding-left: 15px;
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+    margin: 0;
+}
+
+/* Comment form container */
+.comment-form {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+/* Heading inside comment form */
+.comment-form h3 {
+    color: #6bcf7f;
+    margin-bottom: 15px;
+}
+
+/* Message shown when no reviews available */
+.no-reviews {
+    text-align: center;
+    padding: 40px 20px;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+}
+
+/* Emoji above no reviews message */
+.no-reviews::before {
+    content: "💬";
+    display: block;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    opacity: 0.3;
+}
+
+/* Back link styling with icon and background */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 15px 25px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Arrow icon before back link text */
+.back-link::before {
+    content: "←";
+    font-size: 1.2rem;
+}
+
+/* Back link hover: background brightens, text turns gold, moves left slightly */
+.back-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffd93d;
+    transform: translateX(-3px);
+}
+
+/* ================================
+   Select Dropdown Styling
+================================== */
+/* Custom styling for select dropdowns */
+select {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #f8f9fa !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Focus state for select */
+select:focus {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #f8f9fa !important;
+}
+
+/* Options inside select dropdown */
+select option {
+    background: #1a1a1a !important;
+    color: #f8f9fa !important;
+    padding: 10px !important;
+    border: none !important;
+}
+
+/* Hover/focus/selected state for options */
+select option:hover,
+select option:focus,
+select option:checked {
+    background: #2a2a2a !important;
+    color: #ffd93d !important;
+}
+
+/* WebKit scrollbar styling for select */
+select::-webkit-scrollbar {
+    width: 8px;
+}
+
+select::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+select::-webkit-scrollbar-thumb {
+    background: rgba(255, 217, 61, 0.5);
+    border-radius: 4px;
+}
+
+select::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 217, 61, 0.8);
+}
+
+/* Firefox scrollbar styling */
+select {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 217, 61, 0.5) rgba(255, 255, 255, 0.1);
+}
+
+/* ================================
+   Responsive Enhancements
+================================== */
+/* Layout adjustments on tablets and smaller screens */
+@media (max-width: 768px) {
+    .screenings-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .screening-card {
+        padding: 25px;
+    }
+    
+    .movie-meta {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .screening-times-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .ticket-stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .quantity-inputs {
+        grid-template-columns: 1fr;
+    }
+    
+    .comment-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}
+
+/* Further layout and size tweaks for small phones */
+@media (max-width: 480px) {
+    .screening-card {
+        padding: 20px;
+    }
+    
+    .movie-title {
+        font-size: 1.3rem;
+    }
+    
+    .screening-header {
+        padding: 20px;
+    }
+    
+    .booking-form,
+    .reviews-section {
+        padding: 20px;
+    }
+}

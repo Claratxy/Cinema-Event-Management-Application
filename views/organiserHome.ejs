@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Title dynamically includes cinema name -->
+    <title><%= settings.cinema_name %> - Organiser Panel</title>
+    <link rel="stylesheet" href="/css/mainStyle.css">
+    <link rel="stylesheet" href="/css/organiserStyle2.css">
+</head>
+<body>
+<div class="container">
+
+    <!-- Display organiser's cinema info -->
+    <div class="cinema-info">
+        <h1><%= settings.cinema_name %></h1>
+        <div class="cinema-details">
+            <div class="cinema-detail-item">
+                <strong>Location:</strong>
+                <span><%= settings.cinema_location %></span>
+            </div>
+            <div class="cinema-detail-item">
+                <strong>Description:</strong>
+                <span><%= settings.cinema_description %></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary stats: Published, Draft, Total screenings -->
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <div class="stat-number"><%= published.length %></div>
+            <div class="stat-label">Published Screenings</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number"><%= drafts.length %></div>
+            <div class="stat-label">Draft Screenings</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number"><%= published.length + drafts.length %></div>
+            <div class="stat-label">Total Screenings</div>
+        </div>
+    </div>
+
+    <!-- Navigation bar for organiser actions -->
+    <nav class="organiser-nav">
+        <a href="/organiser/settings">Settings</a>
+        <a href="/organiser/create">New Screening</a>
+        <form action="/organiser/logout" method="POST">
+            <button type="submit">Logout</button>
+        </form>
+    </nav>
+
+    <hr>
+
+    <!-- Section for PUBLISHED screenings -->
+    <div class="screening-section">
+        <h2>Published Screenings</h2>
+        <% if (published.length === 0) { %>
+            <!-- If no published screenings -->
+            <div class="empty-state">
+                <p>No published screenings yet.</p>
+                <a href="/organiser/create">Create your first screening</a>
+            </div>
+        <% } else { %>
+            <div class="screening-grid">
+                <% published.forEach(screening => { %>
+                    <div class="screening-card published">
+                        <!-- Screening header with meta info -->
+                        <div class="screening-header">
+                            <div>
+                                <div class="screening-title"><%= screening.movie_title %></div>
+                                <div class="screening-meta">
+                                    <span>Published: <%= screening.published_at %></span>
+                                    <span>Modified: <%= screening.last_modified %></span><br><br>
+                                    <span>Full-price: <%= screening.full_price_count %> | Concession: <%= screening.concession_count %></span>
+                                </div>
+                            </div>
+                            <div class="screening-status published">Published</div>
+                        </div>
+                        
+                        <!-- Actions: view, edit, delete -->
+                        <div class="screening-actions">
+                            <a href="/attendee/screening/<%= screening.id %>">View Page</a>
+                            <a href="/organiser/edit/<%= screening.id %>">Edit</a>
+                            <form action="/organiser/delete/<%= screening.id %>" method="POST" style="display:inline;">
+                                <button type="submit" onclick="return confirm('Delete this screening?')">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+
+    <!-- Section for DRAFT screenings -->
+    <div class="screening-section">
+        <h2>Draft Screenings</h2>
+        <% if (drafts.length === 0) { %>
+            <!-- If no drafts exist -->
+            <div class="empty-state">
+                <p>No drafts yet.</p>
+                <a href="/organiser/create">Create a new screening</a>
+            </div>
+        <% } else { %>
+            <div class="screening-grid">
+                <% drafts.forEach(screening => { %>
+                    <div class="screening-card draft">
+                        <!-- Screening draft info -->
+                        <div class="screening-header">
+                            <div>
+                                <div class="screening-title"><%= screening.movie_title %></div>
+                                <div class="screening-meta">
+                                    <span>Created: <%= screening.created_at %></span>
+                                    <span>Modified: <%= screening.last_modified %></span>
+                                </div>
+                            </div>
+                            <div class="screening-status draft">Draft</div>
+                        </div>
+                        
+                        <!-- Actions: edit, publish, delete -->
+                        <div class="screening-actions">
+                            <a href="/organiser/edit/<%= screening.id %>">Edit</a>
+                            <form action="/organiser/publish/<%= screening.id %>" method="POST" style="display:inline;">
+                                <button type="submit">Publish</button>
+                            </form>
+                            <form action="/organiser/delete/<%= screening.id %>" method="POST" style="display:inline;">
+                                <button type="submit" onclick="return confirm('Delete this screening?')">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+</div>
+</body>
+</html>

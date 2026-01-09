@@ -1,0 +1,124 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <!-- Page title changes based on whether editing or creating -->
+    <title><%= screening ? 'Edit Screening' : 'Create Screening' %></title> 
+    <link rel="stylesheet" href="/css/mainStyle.css">
+    <link rel="stylesheet" href="/css/organiserStyle2.css">
+</head> 
+<body> 
+    <div class="container"> 
+        <h1><%= screening ? 'Edit' : 'Create' %> Screening</h1> 
+        
+        <!-- Main screening info form -->
+        <div class="edit-form">
+            <form method="POST" action="<%= screening ? '/organiser/edit/' + screening.id : '/organiser/create' %>"> 
+                <div class="form-section">
+                    <h3>Movie Information</h3>
+                    
+                    <!-- Movie title and genre inputs -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="movie_title">Movie Title</label>
+                            <input type="text" id="movie_title" name="movie_title" value="<%= screening ? screening.movie_title : '' %>" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="genre">Genre</label>
+                            <input type="text" id="genre" name="genre" value="<%= screening ? screening.genre : '' %>">
+                        </div>
+                    </div>
+
+                    <!-- Movie description -->
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" required><%= screening ? screening.description : '' %></textarea>
+                    </div>
+                </div>
+
+                <!-- Ticket price and quantity configuration -->
+                <div class="form-section">
+                    <h3>Ticket Configuration</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="full_price_count">Full Price Ticket Count</label>
+                            <input type="number" id="full_price_count" name="full_price_count" value="<%= screening ? screening.full_price_count : '50' %>" min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="concession_count">Concession Ticket Count</label>
+                            <input type="number" id="concession_count" name="concession_count" value="<%= screening ? screening.concession_count : '0' %>" min="0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="full_price_amount">Full Price ($)</label>
+                            <input type="number" id="full_price_amount" name="full_price_amount" value="<%= screening ? screening.full_price_amount : '12.00' %>" step="0.01">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="concession_amount">Concession Price ($)</label>
+                            <input type="number" id="concession_amount" name="concession_amount" value="<%= screening && screening.concession_amount !== null ? screening.concession_amount : '' %>" step="0.01">
+                            <small style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">Leave empty if no concession tickets</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit button changes based on mode -->
+                <button type="submit"><%= screening ? 'Update Screening' : 'Create Screening' %></button>
+            </form>
+        </div>
+        
+        <% if (!screening) { %>
+            <!-- Message shown before screening is created -->
+            <div class="subtle-box">
+                <p style="color: rgba(255, 255, 255, 0.7); text-align: center; font-style: italic;">
+                    You can add screening times after creating the screening.
+                </p>
+            </div>
+        <% } else { %>
+            <!-- Screening time management UI after screening exists -->
+            <div class="subtle-box">
+                <h4> Manage Screening Times</h4>
+
+                <!-- Form to add new screening datetime -->
+                <div class="screening-time-form">
+                    <form action="/organiser/edit/<%= screening.id %>/add-time" method="POST" style="display: flex; gap: 15px; align-items: end; flex-wrap: wrap; width: 100%;">
+                        <div class="form-group" style="flex: 1; min-width: 200px; margin-bottom: 0;">
+                            <label for="screening_datetime">Add Screening Date & Time</label>
+                            <input type="datetime-local" id="screening_datetime" name="screening_datetime" required>
+                        </div>
+                        <button type="submit" style="margin-bottom: 0; white-space: nowrap;">Add Time</button>
+                    </form>
+                </div>
+
+                <!-- List of existing screening times -->
+                <% if (screeningTimes.length === 0) { %>
+                    <div class="empty-state">
+                        <p>No screening times scheduled yet.</p>
+                    </div>
+                <% } else { %>
+                    <ul class="screening-time-list">
+                        <% screeningTimes.forEach(time => { %>
+                            <li>
+                                <span><%= new Date(time.screening_datetime).toLocaleString() %></span>
+                                <form action="/organiser/edit/<%= screening.id %>/delete-time/<%= time.id %>" method="POST" style="margin: 0;">
+                                    <button type="submit" onclick="return confirm('Delete this time?')">Delete</button>
+                                </form>
+                            </li>
+                        <% }) %>
+                    </ul>
+                <% } %>
+            </div>
+            <!-- Display when the screening was originally created -->
+            <p>Created on: <%= new Date(screening.created_at).toLocaleString() %></p>
+        <% } %>
+
+        <hr> 
+        <!-- Link back to organiser home page -->
+        <a href="/organiser/home" class="back-link">← Back to Home</a> 
+    </div>
+</body>  
+</html>

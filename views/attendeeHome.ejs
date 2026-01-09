@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Cinema Screenings</title>
+    <!-- Link to global and attendee-specific styles -->
+    <link rel="stylesheet" href="/css/mainStyle.css" />
+    <link rel="stylesheet" href="/css/attendeeStyle.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Our Cinema!</h1>
+        <h2>Available Screenings</h2>
+
+        <!-- Search bar to filter published screenings -->
+        <form method="GET" action="/attendee/home" class="search-bar">
+            <input type="text" name="search" placeholder="Search by title, genre, or cinema..." value="<%= typeof search !== 'undefined' ? search : '' %>">
+            <button type="submit">Search</button>
+        </form>
+
+        <% if (screenings.length === 0) { %>
+            <!-- Message shown if there are no published screenings -->
+            <div class="no-screenings">
+                <p>No screenings are currently available. Please check back later!</p>
+            </div>
+        <% } else { %>
+            <!-- Loop through each screening and display in a card format -->
+            <div class="screenings-grid">
+                <% screenings.forEach(screening => { %>
+                    <div class="screening-card">
+                        
+                        <!-- Header section with movie title and cinema name -->
+                        <div class="card-header">
+                            <div class="title-section">
+                                <a href="/attendee/screening/<%= screening.id %>" class="movie-title">
+                                    <%= screening.movie_title %>
+                                </a>
+                                <div class="cinema-info">
+                                    <%= screening.cinema_name || 'Unnamed Cinema' %>
+                                </div>
+                            </div>
+                            <div class="genre-tag">
+                                <%= screening.genre %>
+                            </div>
+                        </div>
+
+                        <!-- Description of the cinema and the movie -->
+                        <div class="card-content">
+                            <div class="cinema-description">
+                                <%= screening.cinema_description %>
+                            </div>
+                            <p class="movie-description">
+                                <%= screening.description %>
+                            </p>
+                        </div>
+
+                        <!-- Upcoming screening times -->
+                        <div class="event-date">
+                            <% if (groupedTimes[screening.id]) { %>
+                                <p>Upcoming Screenings:</p>
+                                <ul>
+                                    <% groupedTimes[screening.id].forEach(time => { %>
+                                        <li>
+                                            <%= new Date(time.screening_datetime).toLocaleDateString() %> 
+                                            <%= new Date(time.screening_datetime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %>
+                                        </li>
+                                    <% }) %>
+                                </ul>
+                            <% } else { %>
+                                <p>No upcoming times</p>
+                            <% } %>
+                        </div>
+
+                        <!-- Button to view full details and book tickets -->
+                        <div class="card-actions">
+                            <a href="/attendee/screening/<%= screening.id %>" class="view-details-btn">
+                                View Details & Book
+                            </a>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+
+        <!-- Button to return to main landing page (POST logout for organiser mode) -->
+        <div class="return-button">
+            <form action="/organiser/logout" method="POST">
+                <button type="submit">Return</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

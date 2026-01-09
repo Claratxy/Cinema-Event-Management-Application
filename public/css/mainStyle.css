@@ -1,0 +1,556 @@
+/* ================================
+   Base Reset & Typography
+================================== */
+/* Reset margin, padding and use border-box sizing on all elements */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    /* Smooth scrolling for anchor links */
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Dark gradient background */
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+    color: #f8f9fa; /* Light text color */
+    line-height: 1.6;
+    padding: 20px;
+    font-size: 16px;
+    min-height: 100vh; /* Full viewport height */
+    position: relative;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Subtle animated background glow elements */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Two overlapping radial gradients for soft color glows */
+    background: radial-gradient(circle at 20% 80%, rgba(220, 38, 127, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+    pointer-events: none; /* Clicks pass through */
+    z-index: -1; /* Behind all content */
+}
+
+/* ================================
+   Layout Containers
+================================== */
+.container {
+    max-width: 1000px;
+    margin: 0 auto; /* Center horizontally */
+    background: rgba(26, 26, 26, 0.95); /* Slightly transparent dark bg */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    /* Soft shadow and subtle outline */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Thin horizontal highlight line near top */
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+}
+
+/* Hover effect lifts container and intensifies shadow */
+.container:hover {
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* ================================
+   Headings
+================================== */
+h1, h2, h3 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+/* Large gradient-text main heading with bottom border */
+h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcf7f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+}
+
+/* Decorative underline bar below h1 */
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcf7f);
+    border-radius: 2px;
+}
+
+/* Secondary headings with accent bar on left */
+h2 {
+    font-size: 1.8rem;
+    margin-top: 40px;
+    margin-bottom: 25px;
+    color: #ffd93d;
+    position: relative;
+    padding-left: 20px;
+}
+
+h2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #ffd93d, #ff6b6b);
+    border-radius: 2px;
+}
+
+h3 {
+    font-size: 1.4rem;
+    color: #e9ecef;
+}
+
+/* ================================
+   Forms & Inputs
+================================== */
+/* Space above forms */
+form {
+    margin-top: 20px;
+}
+
+/* Style inputs, selects, and textareas uniformly */
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 16px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: #f8f9fa;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+/* Highlight border and subtle glow on focus */
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #ffd93d;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 217, 61, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Placeholder text with partial transparency */
+input::placeholder,
+textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Allow textarea vertical resizing only, with minimum height */
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* ================================
+   Buttons
+================================== */
+/* Main button styling with gradient background */
+button {
+    background: linear-gradient(135deg, #ffd93d, #ff6b6b);
+    color: #1a1a1a;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Shiny highlight effect sliding across button on hover */
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+/* Hover: reverse gradient, lift and shadow */
+button:hover {
+    background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+/* Pressed state shrinks button slightly */
+button:active {
+    transform: scale(0.98);
+}
+
+/* Extra spacing on buttons inside forms */
+form button {
+    margin-top: 15px;
+}
+
+/* Special styling for last submit button (darker tones) */
+button[type="submit"]:last-child {
+    background: linear-gradient(135deg, #6c757d, #495057);
+}
+
+button[type="submit"]:last-child:hover {
+    background: linear-gradient(135deg, #495057, #6c757d);
+    box-shadow: 0 8px 20px rgba(108, 117, 125, 0.4);
+}
+
+/* ================================
+   Links
+================================== */
+/* Accent color and subtle underline animation for links */
+a {
+    color: #ffd93d;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    font-weight: 500;
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #ffd93d, #ff6b6b);
+    transition: width 0.3s ease;
+}
+
+a:hover {
+    color: #ff6b6b;
+}
+
+a:hover::after {
+    width: 100%;
+}
+
+/* ================================
+   Lists & Cards
+================================== */
+/* Use grid layout with gaps for list items */
+ul {
+    list-style-type: none;
+    margin-top: 20px;
+    padding-left: 0;
+    display: grid;
+    gap: 20px;
+}
+
+/* Individual list items styled as cards with accent border */
+li {
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    border-left: 4px solid #ffd93d;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Thin horizontal highlight line near top of each card */
+li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 217, 61, 0.3), transparent);
+}
+
+/* Hover lifts card and changes left border color */
+li:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-left-color: #ff6b6b;
+}
+
+/* Title inside list item */
+li strong {
+    color: #ffffff;
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Secondary text (e.g. dates) */
+li small {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+/* Paragraph text inside list item */
+li p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
+/* ================================
+   Navigation
+================================== */
+/* Flex container for navigation links and form */
+nav {
+    margin: 30px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Style for nav links */
+nav a {
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    background: rgba(255, 217, 61, 0.1);
+}
+
+/* Inline display for forms inside nav */
+nav form {
+    display: inline;
+    margin: 0;
+}
+
+/* Style for nav buttons */
+nav button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+/* ================================
+   Utility & Feedback
+================================== */
+/* Error message styling with red background and left border */
+.error {
+    color: #ff6b6b;
+    font-weight: 600;
+    background: rgba(255, 107, 107, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #ff6b6b;
+}
+
+/* Comment box styling with green accent border */
+.comment-box {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 4px solid #6bcf7f;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Style for author/time text inside comments */
+.comment-box em {
+    display: block;
+    margin-top: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: normal;
+}
+
+/* Back link button style for navigation */
+a.back-link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 30px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+a.back-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffd93d;
+}
+
+/* ================================
+   Special Cinema Elements
+================================== */
+/* Thin horizontal separator line with gradient */
+hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 217, 61, 0.3), transparent);
+    margin: 30px 0;
+}
+
+/* Placeholder for movie poster with gradient background */
+.movie-poster {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+/* ================================
+   Animations
+================================== */
+/* Fade in and slide up animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animate immediate children of container with fadeInUp */
+.container > * {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Stagger animation delays for children */
+.container > *:nth-child(1) { animation-delay: 0.1s; }
+.container > *:nth-child(2) { animation-delay: 0.2s; }
+.container > *:nth-child(3) { animation-delay: 0.3s; }
+.container > *:nth-child(4) { animation-delay: 0.4s; }
+
+/* ================================
+   Responsive Design
+================================== */
+/* Adjust layout and sizing on tablets and smaller */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 25px;
+        border-radius: 16px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    nav {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    nav a {
+        text-align: center;
+        width: 100%;
+    }
+    
+    li {
+        padding: 20px;
+    }
+}
+
+/* Further adjustments for small phones */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+        margin: 5px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    input,
+    textarea,
+    select {
+        padding: 14px;
+    }
+    
+    button {
+        padding: 14px 20px;
+        font-size: 0.9rem;
+    }
+}

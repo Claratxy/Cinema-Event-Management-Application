@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Responsive meta tag for mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success - Cinema Manager</title>
+
+    <!-- Base + organiser-specific styles -->
+    <link rel="stylesheet" href="/css/mainStyle.css">
+    <link rel="stylesheet" href="/css/organiserStyle1.css">
+</head>
+<body>
+    <div class="container success-page">
+        <!-- Confirmation header -->
+        <h1 class="page-title success-title">Success!</h1>
+
+        <!-- Dynamic success message -->
+        <div class="success-message"><%= message %></div>
+
+        <!-- Link to redirect the user after action -->
+        <a class="back-link" href="<%= returnLink %>">Back to Screenings List</a>
+    </div>
+</body>
+</html>

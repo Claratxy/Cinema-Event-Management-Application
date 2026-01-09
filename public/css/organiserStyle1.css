@@ -1,0 +1,468 @@
+/* ================================
+   Home Page Styling
+================================== */
+.home-page {
+    text-align: center;
+    padding-top: 40px;
+    position: relative;
+    overflow: hidden; /* Hide overflowing animated background */
+}
+
+/* Animated subtle radial gradient background effect */
+.home-page::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.03) 0%, transparent 70%);
+    animation: slow-rotate 20s linear infinite;
+    pointer-events: none; /* Allow clicks through */
+}
+
+/* Smooth continuous rotation animation */
+@keyframes slow-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Big, bold, colorful gradient page title with transparent fill and glow */
+.page-title {
+    font-size: 3rem;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #ffd93d, #ff6b6b, #6bcf7f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(255, 217, 61, 0.3);
+    position: relative;
+    z-index: 1; /* Ensure above background */
+}
+
+/* Container for portal link buttons stacked vertically */
+.portal-links {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.portal-links p {
+    margin: 0;
+    position: relative;
+}
+
+/* Styling for individual portal buttons */
+.portal-link {
+    display: inline-block;
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding: 18px 40px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    color: #ffd93d;
+    border: 2px solid rgba(255, 217, 61, 0.3);
+    border-radius: 16px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    backdrop-filter: blur(10px);
+    min-width: 250px;
+}
+
+/* Shiny sliding highlight on portal buttons */
+.portal-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 217, 61, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+/* Hover effect: brighten background, raise, scale up, add shadow, and text color change */
+.portal-link:hover {
+    background: linear-gradient(135deg, rgba(255, 217, 61, 0.2), rgba(255, 107, 107, 0.1));
+    border-color: #ffd93d;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(255, 217, 61, 0.3);
+    color: #ffffff;
+}
+
+/* Animate the sliding highlight on hover */
+.portal-link:hover::before {
+    left: 100%;
+}
+
+/* Special styling for the first portal link (e.g., Organiser) */
+.portal-link:first-child {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 107, 107, 0.05));
+    border-color: rgba(255, 107, 107, 0.3);
+    color: #ff6b6b;
+}
+
+.portal-link:first-child:hover {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 217, 61, 0.1));
+    border-color: #ff6b6b;
+    box-shadow: 0 15px 30px rgba(255, 107, 107, 0.3);
+}
+
+/* ================================
+   Error Page Styling
+================================== */
+.error-page {
+    text-align: center;
+    padding-top: 60px;
+    position: relative;
+}
+
+/* Large faint warning icon with pulsing animation */
+.error-page::before {
+    content: '⚠️';
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 4rem;
+    opacity: 0.1;
+    animation: pulse-error 2s ease-in-out infinite;
+}
+
+/* Pulsing opacity and slight scale animation */
+@keyframes pulse-error {
+    0%, 100% { opacity: 0.1; transform: translateX(-50%) scale(1); }
+    50% { opacity: 0.3; transform: translateX(-50%) scale(1.1); }
+}
+
+/* Big red error title with shaking animation */
+.error-title {
+    color: #ff6b6b;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Quick side-to-side shaking */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Error message box with light red background and blur */
+.error-message {
+    font-size: 1.2rem;
+    color: #f8f9fa;
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+}
+
+/* ================================
+   Success Page Styling
+================================== */
+.success-page {
+    text-align: center;
+    padding-top: 60px;
+    position: relative;
+}
+
+/* Large faint sparkle icon with gentle rotation animation */
+.success-page::before {
+    content: '✨';
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 4rem;
+    opacity: 0.2;
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+/* Rotation and opacity animation for sparkle */
+@keyframes sparkle {
+    0%, 100% { opacity: 0.2; transform: translateX(-50%) rotate(0deg); }
+    50% { opacity: 0.5; transform: translateX(-50%) rotate(180deg); }
+}
+
+/* Big green success title with subtle glow and bounce-in effect */
+.success-title {
+    color: #6bcf7f;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px rgba(107, 207, 127, 0.5);
+    animation: bounce-in 0.6s ease-out;
+}
+
+/* Scale and fade in animation */
+@keyframes bounce-in {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Success message box with light green background and blur */
+.success-message {
+    font-size: 1.2rem;
+    color: #f8f9fa;
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(107, 207, 127, 0.1);
+    border: 1px solid rgba(107, 207, 127, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+}
+
+/* ================================
+   Authentication Pages
+================================== */
+.auth-page {
+    max-width: 450px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.auth-page h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.2rem;
+}
+
+/* Form container with dark transparent background and border */
+.auth-form {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+/* Label styling with bright gold color */
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ffd93d;
+    font-weight: 600;
+}
+
+/* Input fields with transparent dark bg, border, and smooth focus */
+.form-group input {
+    width: 100%;
+    padding: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #f8f9fa;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #ffd93d;
+    box-shadow: 0 0 0 3px rgba(255, 217, 61, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Placeholder text dimmed */
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Button container with spacing */
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.form-actions button {
+    flex: 1; /* Buttons share equal width */
+}
+
+/* Links container below form */
+.auth-links {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+}
+
+.auth-links p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.auth-links a {
+    color: #ffd93d;
+    font-weight: 600;
+}
+
+/* ================================
+   Password Strength Indicator
+================================== */
+.password-strength {
+    margin-top: 10px;
+}
+
+/* Label for password strength */
+.strength-label {
+    display: block;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 5px;
+}
+
+/* Container for strength bar */
+.strength-bar-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Animated gradient bar indicating strength */
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcf7f);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Shimmer effect on strength bar */
+.strength-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+/* Shimmer animation moving left to right */
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Text below strength bar showing label */
+.strength-text {
+    font-size: 0.85rem;
+    margin-top: 5px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* ================================
+   Back Link Styling
+================================== */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 30px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+/* Left arrow before the back link text */
+.back-link::before {
+    content: '←';
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect: brighten bg, gold text, slight slide left */
+.back-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffd93d;
+    transform: translateX(-5px);
+}
+
+/* Arrow slides left on hover */
+.back-link:hover::before {
+    transform: translateX(-3px);
+}
+
+/* ================================
+   Responsive Design
+================================== */
+@media (max-width: 768px) {
+    /* Smaller page title on tablets */
+    .page-title {
+        font-size: 2.5rem;
+    }
+    
+    /* Slightly smaller portal buttons */
+    .portal-link {
+        font-size: 1.1rem;
+        padding: 16px 30px;
+        min-width: 200px;
+    }
+    
+    /* Auth page and form width adjustments */
+    .auth-page {
+        max-width: 100%;
+    }
+    
+    .auth-form {
+        padding: 30px 20px;
+    }
+    
+    /* Stack form action buttons vertically */
+    .form-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Smaller fonts on mobile phones */
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .portal-links {
+        gap: 20px;
+    }
+    
+    .portal-link {
+        font-size: 1rem;
+        padding: 14px 25px;
+        min-width: 180px;
+    }
+    
+    .error-title,
+    .success-title {
+        font-size: 2rem;
+    }
+    
+    .auth-form {
+        padding: 25px 15px;
+    }
+}

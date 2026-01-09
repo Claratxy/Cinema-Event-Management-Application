@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport for mobile responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organiser Registration - Cinema Manager</title>
+
+    <!-- General + organiser styles -->
+    <link rel="stylesheet" href="/css/mainStyle.css">
+    <link rel="stylesheet" href="/css/organiserStyle1.css">
+</head>
+<body>
+    <!-- Registration container -->
+    <div class="container auth-page">
+        <h1>Register New Organiser</h1>
+        
+        <!-- Registration form posts to /organiser/register -->
+        <form class="auth-form" action="/organiser/register" method="POST">
+            <!-- Username input -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Choose a username" required>
+            </div>
+            
+            <!-- Password input with strength checker -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Create a strong password" required>
+
+                <!-- Strength meter UI -->
+                <div class="password-strength">
+                    <small class="strength-label">Password strength:</small>
+                    <div class="strength-bar-container">
+                        <div id="strengthBar" class="strength-bar"></div>
+                    </div>
+                    <small id="strengthText" class="strength-text">Too Short</small>
+                </div>
+            </div>
+            
+            <!-- Submit button -->
+            <div class="form-actions">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+
+        <!-- Link to login page -->
+        <div class="auth-links">
+            <p>Already registered? <a href="/organiser/login">Login here</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Optional email field validation (if used)
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    const emailInput = form.querySelector('input[type="email"]');
+                    if (emailInput) {
+                        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailPattern.test(emailInput.value)) {
+                            alert("Please enter a valid email address.");
+                            e.preventDefault();
+                        }
+                    }
+                });
+            });
+
+            // Password strength visual feedback
+            const passwordInput = document.querySelector('input[name="password"]');
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+
+            if (passwordInput && strengthBar && strengthText) {
+                passwordInput.addEventListener('input', () => {
+                    const val = passwordInput.value;
+                    let strength = 0;
+
+                    // Check password criteria
+                    if (val.length >= 5) strength++;
+                    if (/[A-Z]/.test(val)) strength++;
+                    if (/[a-z]/.test(val)) strength++;
+                    if (/[0-9]/.test(val)) strength++;
+                    if (/[\W]/.test(val)) strength++;
+
+                    // Colors and labels for strength levels
+                    const colors = ["#ff6b6b", "#ff9f43", "#ffd93d", "#6bcf7f", "#27ae60"];
+                    const labels = ["Very Weak", "Weak", "Moderate", "Strong", "Very Strong"];
+                    const percentage = (strength * 20);
+
+                    // Update progress bar and label
+                    strengthBar.style.width = percentage + "%";
+                    if (strength > 0) {
+                        strengthBar.style.background = colors[strength - 1];
+                        strengthText.textContent = labels[strength - 1];
+                        strengthText.style.color = colors[strength - 1];
+                    } else {
+                        strengthBar.style.width = "0%";
+                        strengthText.textContent = "Too Short";
+                        strengthText.style.color = "rgba(255, 255, 255, 0.7)";
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

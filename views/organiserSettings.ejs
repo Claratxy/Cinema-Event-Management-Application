@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Organiser Settings</title>
+    <link rel="stylesheet" href="/css/mainStyle.css">
+    <link rel="stylesheet" href="/css/organiserStyle2.css">
+</head>
+<body>
+<div class="container">
+    <!-- Page title -->
+    <h1>Cinema Settings</h1>
+    
+    <!-- Form to update cinema settings -->
+    <div class="settings-form">
+        <form action="/organiser/settings" method="POST">
+            <div class="form-section">
+                <h3>Basic Information</h3>
+                
+                <!-- Input: Cinema name -->
+                <div class="form-group">
+                    <label for="cinema_name">Cinema Name</label>
+                    <input type="text" id="cinema_name" name="cinema_name" value="<%= settings.cinema_name %>" required>
+                </div>
+
+                <!-- Input: Location -->
+                <div class="form-group">
+                    <label for="cinema_location">Location</label>
+                    <input type="text" id="cinema_location" name="cinema_location" value="<%= settings.cinema_location %>" required>
+                </div>
+
+                <!-- Input: Description -->
+                <div class="form-group">
+                    <label for="cinema_description">Description</label>
+                    <textarea id="cinema_description" name="cinema_description" required><%= settings.cinema_description %></textarea>
+                </div>
+            </div>
+
+            <!-- Save button -->
+            <button type="submit">Save Settings</button>
+        </form>
+    </div>
+    
+    <!-- Navigation link back to dashboard -->
+    <a href="/organiser/home" class="back-link">← Back to Home</a>
+</div>
+</body>
+</html>

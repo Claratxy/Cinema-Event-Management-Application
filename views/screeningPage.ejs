@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title><%= screening.movie_title %> - Booking & Feedback</title>
+
+    <!-- Base attendee styles -->
+    <link rel="stylesheet" href="/css/mainStyle.css" />
+    <link rel="stylesheet" href="/css/attendeeStyle.css" />
+</head>
+<body>
+<div class="container">
+
+    <!-- Movie Header Info -->
+    <header class="screening-header">
+        <h1><%= screening.movie_title %></h1>
+        <div class="movie-meta">
+            <!-- Display genre -->
+            <div class="meta-item" data-icon="🎭">
+                <strong>Genre:</strong> <%= screening.genre %>
+            </div>
+            <!-- Display cinema name -->
+            <div class="meta-item" data-icon="📍">
+                <strong>Cinema:</strong> <%= screening.cinema_name || 'Unnamed Cinema' %>
+            </div>
+            <!-- Display cinema location -->
+            <div class="meta-item" data-icon="🌍">
+                <strong>Location:</strong> <%= screening.cinema_location || 'Location not set' %>
+            </div>
+        </div>
+        <!-- Short movie description -->
+        <p class="movie-description"><%= screening.description %></p>
+    </header>
+
+    <!-- Screening Times -->
+    <section class="screening-times-section">
+        <h2>Available Screening Times</h2>
+
+        <% 
+            // Group times by date for easier display
+            const grouped = {};
+            screeningTimes.forEach(time => {
+                const date = new Date(time.screening_datetime).toLocaleDateString();
+                if (!grouped[date]) grouped[date] = [];
+                grouped[date].push(new Date(time.screening_datetime).toLocaleTimeString());
+            });
+        %>
+
+        <!-- Display time slots grouped by date -->
+        <div class="screening-times-grid">
+            <% Object.keys(grouped).forEach(date => { %>
+                <div class="date-group">
+                    <div class="date-header"><%= date %></div>
+                    <div class="time-slots">
+                        <% grouped[date].forEach(time => { %>
+                            <span class="time-slot"><%= time %></span>
+                        <% }) %>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+
+    <!-- Ticket Prices + Availability -->
+    <section class="tickets-summary">
+        <div class="pricing-row">
+            <div class="pricing-column">
+                <span class="price-label">Full Price:</span>
+                <span class="price-value">$<%= screening.full_price_amount.toFixed(2) %></span>
+            </div>
+            <div class="pricing-column">
+                <span class="price-label">Concession:</span>
+                <span class="price-value">
+                    <%= screening.concession_amount != null ? `$${screening.concession_amount.toFixed(2)}` : 'Not available' %>
+                </span>
+            </div>
+        </div>
+
+        <h4>Ticket Availability</h4>
+        <div class="ticket-stats">
+            <!-- Full price sold/total -->
+            <div class="ticket-stat">
+                <div class="ticket-stat-number">
+                    <%= bookingTotals.fullSold %> / <%= screening.full_price_count || 'N/A' %>
+                </div>
+                <div class="ticket-stat-label">🎟️ Full Price</div>
+            </div>
+            <!-- Concession sold/total -->
+            <div class="ticket-stat">
+                <div class="ticket-stat-number">
+                    <%= bookingTotals.concessionSold %> / <%= screening.concession_count || 'N/A' %>
+                </div>
+                <div class="ticket-stat-label">🎟️ Concession</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Form -->
+    <section class="booking-form">
+        <h2>Book Your Tickets</h2>
+        <form action="/attendee/screening/<%= screening.id %>/book" method="POST">
+            <!-- Choose time -->
+            <div class="form-row">
+                <div>
+                    <label>Select Screening Time:</label>
+                    <select name="screening_time_id" required>
+                        <% if (screeningTimes.length === 0) { %>
+                            <option disabled>No screening times available</option>
+                        <% } else { %>
+                            <% screeningTimes.forEach(time => { %>
+                                <option value="<%= time.id %>">
+                                    <%= new Date(time.screening_datetime).toLocaleString() %>
+                                </option>
+                            <% }) %>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Name and Email -->
+            <div class="form-row">
+                <div>
+                    <label>Your Name:</label>
+                    <input type="text" name="attendeeName" required />
+                </div>
+                <div>
+                    <label>Your Email:</label>
+                    <input type="email" name="email" required />
+                </div>
+            </div>
+
+            <!-- Ticket Quantities -->
+            <div class="quantity-inputs">
+                <div>
+                    <label>Full Price Tickets:</label>
+                    <input type="number" name="fullPriceQty" min="0" value="0" />
+                </div>
+                <div>
+                    <label>Concession Tickets:</label>
+                    <input type="number" name="concessionQty" min="0" value="0" />
+                </div>
+            </div>
+
+            <!-- Book button -->
+            <button type="submit">Book Now</button>
+        </form>
+    </section>
+
+    <hr>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+        <h2>Audience Reviews</h2>
+
+        <!-- Show reviews if available -->
+        <% if (comments.length === 0) { %>
+            <div class="no-reviews">
+                <p>No reviews yet. Be the first to share your thoughts after the screening!</p>
+            </div>
+        <% } else { %>
+            <div class="comment-list">
+                <% comments.forEach(c => { %>
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <span class="comment-author"><%= c.attendee_name %></span>
+                            <span class="comment-date"><%= new Date(c.created_at).toLocaleDateString() %></span>
+                        </div>
+                        <blockquote class="comment-text"><%= c.comment_text %></blockquote>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+
+        <!-- Leave a new review -->
+        <div class="comment-form">
+            <h3>Leave a Review</h3>
+            <p>Attended this screening? Share your thoughts with others:</p>
+            <form action="/attendee/comment/<%= screening.id %>" method="POST">
+                <input type="text" name="attendee_name" placeholder="Your Name" required>
+                <textarea name="comment_text" placeholder="Write your review..." required></textarea>
+                <button type="submit">Submit Review</button>
+            </form>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- Back link -->
+    <footer>
+        <a href="/attendee/home" class="back-link">Back to Screenings List</a>
+    </footer>
+</div>
+
+<!-- Simple email format validation -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.addEventListener('submit', function (e) {
+                const emailInput = form.querySelector('input[type="email"]');
+                if (emailInput) {
+                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailPattern.test(emailInput.value)) {
+                        alert("Please enter a valid email address.");
+                        e.preventDefault();
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

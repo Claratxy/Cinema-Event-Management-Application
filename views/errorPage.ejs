@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Responsive scaling on mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Cinema Manager</title>
+
+    <!-- Load base + organiser styles -->
+    <link rel="stylesheet" href="/css/mainStyle.css">
+    <link rel="stylesheet" href="/css/organiserStyle1.css">
+</head>
+<body>
+    <!-- Error display container -->
+    <div class="container error-page">
+        <h1 class="page-title error-title">Something Went Wrong</h1>
+
+        <!-- Dynamic error message from server -->
+        <div class="error-message"><%= message %></div>
+
+        <!-- Return to landing page -->
+        <a class="back-link" href="/">Back to Home</a>
+    </div>
+</body>
+</html>
