@@ -1,4 +1,11 @@
 ### Cinema Event Management Application ###
+(JavaScript, Node.js, Express, EJS, HTML, CSS, SQL, SQLite, Git)
+
+•	Developed a full-stack cinema screening management app with separate organiser and attendee portals.
+
+•	Implemented secure organiser authentication using express-session and custom middleware to protect all organiser routes.
+
+•	Built CRUD features for movie screenings, cinema settings, and multi-date screening times with dynamic EJS rendering.
 
 This project is a web application for managing a cinema screening platform. It supports two
 main users: organisers and attendees. Organisers can log in, create or edit movie screenings,
