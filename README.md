@@ -7,6 +7,10 @@
 
 •	Built CRUD features for movie screenings, cinema settings, and multi-date screening times with dynamic EJS rendering.
 
+•	Created booking and review systems for attendees, including overbooking prevention, email validation, and real-time ticket availability display.
+
+•	Designed SQLite database schema and ERD, following a three-tier architecture for scalable deployment.
+
 This project is a web application for managing a cinema screening platform. It supports two
 main users: organisers and attendees. Organisers can log in, create or edit movie screenings,
 set ticket types, and manage screening times. Attendees can view available screenings, book
