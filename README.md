@@ -33,6 +33,8 @@ This app includes full CRUD features for screenings and secure user session hand
 for organisers. The project also includes form validation and feedback for user actions. The
 main extension is password-based access control for organisers using secure sessions.
 
+#### Video Demo
+**[https://youtu.be/ZmIj8m4O23g](https://youtu.be/ZmIj8m4O23g)**
 
 #### Installation requirements ####
 
